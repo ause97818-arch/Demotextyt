@@ -214,7 +214,32 @@ body.light-mode .sidebar-nav-item:hover{ border-color:rgba(45,62,44,0.3); backgr
 body.light-mode .sidebar-nav-item.active-view{ border-color:#2A6E1C; background:rgba(45,122,31,0.07); box-shadow:0 0 22px rgba(45,122,31,0.14); }
 body.light-mode .sidebar-nav-item .nav-icon{ background:rgba(45,122,31,0.08); border-color:rgba(45,62,44,0.18); color:#2A6E1C; }
 body.light-mode .sidebar-nav-item.active-view .nav-icon{ background:#4CAF50; color:#fff; border-color:#4CAF50; }
-
+  /* ── Sprout Brand Row (refactored, single-line, no wrap) ── */
+.sprout-brand-row{
+  display:flex; align-items:center; gap:.85rem;
+  padding:1.6rem 1.25rem 1.25rem;
+  border-bottom:1px solid rgba(228,253,151,0.1);
+  position:relative;
+}
+.sprout-brand-avatar{ position:relative; flex-shrink:0; }
+.sprout-brand-avatar img{
+  width:3rem; height:3rem; border-radius:50%; object-fit:cover; display:block;
+  border:2px solid #E4FD97; box-shadow:0 0 18px rgba(228,253,151,0.3);
+}
+.sprout-brand-badge{
+  position:absolute; bottom:-2px; right:-2px; width:1.1rem; height:1.1rem;
+  background:#E4FD97; border-radius:50%; border:2px solid #131C14;
+  display:flex; align-items:center; justify-content:center;
+}
+.sprout-brand-badge i{ font-size:7px; color:#10160F; }
+.sprout-brand-text{ display:flex; flex-direction:column; min-width:0; line-height:1.25; flex:1; }
+.sprout-brand-title{
+  font-family:'Syne', sans-serif; font-weight:800; letter-spacing:.12em;
+  text-transform:uppercase; font-size:.95rem; color:#E4FD97; white-space:nowrap;
+}
+.sprout-brand-sub{ font-size:.66rem; color:#8FA386; white-space:nowrap; margin-top:2px; }
+body.light-mode .sprout-brand-row{ border-bottom-color:rgba(45,62,44,0.12); }
+body.light-mode .sprout-brand-title{ color:#2A6E1C; }
 /* ── History modal ── */
 #historyModal{ pointer-events:none; opacity:0; transition:opacity .3s ease; }
 #historyModal.open{ pointer-events:auto; opacity:1; }
@@ -274,8 +299,11 @@ body.light-mode #themeToggleBtn:hover{ box-shadow:0 0 18px rgba(45,122,31,0.18);
 #iconMoon{ opacity:1; transform:rotate(0deg) scale(1); }
 #iconSun{  opacity:0; transform:rotate(-90deg) scale(0.6); }
 body.light-mode #iconMoon{ opacity:0; transform:rotate(90deg) scale(0.6); }
-body.light-mode #iconSun{  opacity:1; transform:rotate(0deg) scale(1); }
-
+body.light-mode #viewtubeContainer{
+  width:100%;
+  margin:0;
+  transition:none; /* sidebar is an overlay drawer, not a push-layout — no shift needed */
+}
 /* Light-mode Tailwind overrides */
 body.light-mode{ color:var(--body-text); }
 body.light-mode .text-\[\#9FB096\]{ color:var(--muted) !important; }
@@ -621,11 +649,20 @@ body.light-mode .vt-watch-action-btn.liked{ background:#4CAF50; color:#fff; bord
 .vt-watch-channel-row{ display:flex; align-items:center; gap:13px; padding:13px 0; margin-bottom:22px; border-bottom:1px solid rgba(228,253,151,0.1); }
 .vt-watch-ch-avatar{ width:44px; height:44px; border-radius:50%; object-fit:cover; background:rgba(228,253,151,0.1); flex-shrink:0; border:2px solid rgba(228,253,151,0.22); }
 .vt-watch-ch-avatar-init{ width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; font-weight:800; flex-shrink:0; border:2px solid rgba(228,253,151,0.22); }
-.vt-watch-ch-info{ flex:1; min-width:0; }
-.vt-watch-ch-name{ font-family:'Syne', sans-serif; font-size:0.92rem; font-weight:800; color:var(--body-text); cursor:pointer; margin-bottom:2px; }
-.vt-watch-ch-name:hover{ text-decoration:underline; }
-.vt-watch-ch-subs{ font-size:0.76rem; color:var(--muted); font-weight:600; }
-.vt-watch-subscribe-btn{ flex-shrink:0; background:var(--lime); color:#10160F; font-family:'Syne', sans-serif; font-size:0.75rem; font-weight:800; padding:8px 20px; border-radius:9999px; letter-spacing:.06em; text-transform:uppercase; transition:filter .22s ease, transform .22s ease, box-shadow .22s ease; }
+.vt-watch-channel-row{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:13px 0; margin-bottom:22px; border-bottom:1px solid rgba(228,253,151,0.1);
+  width:100%; flex-wrap:nowrap;
+}
+.vt-watch-ch-info{
+  flex:1 1 auto; min-width:0; display:flex; flex-direction:column; justify-content:center;
+  margin-left:2px; margin-right:auto; overflow:hidden;
+}
+.vt-watch-ch-name{
+  font-family:'Syne', sans-serif; font-size:0.92rem; font-weight:800; color:var(--body-text);
+  cursor:pointer; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}.vt-watch-ch-subs{ font-size:0.76rem; color:var(--muted); font-weight:600; }
+.vt-watch-subscribe-btn{ flex-shrink:0; margin-left:8px; background:var(--lime); color:#10160F; font-family:'Syne', sans-serif; font-size:0.75rem; font-weight:800; padding:8px 20px; border-radius:9999px; letter-spacing:.06em; text-transform:uppercase; transition:filter .22s ease, transform .22s ease, box-shadow .22s ease; }
 .vt-watch-subscribe-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); box-shadow:0 0 22px rgba(228,253,151,0.3); }
 .vt-watch-subscribe-btn.subscribed{ background:rgba(228,253,151,0.08); color:var(--lime); border:1px solid rgba(228,253,151,0.3); }
 body.light-mode .vt-watch-subscribe-btn{ background:#4CAF50; color:#fff; }
@@ -744,17 +781,18 @@ body.light-mode .vt-playlist-card{ background:rgba(255,255,255,0.85); border-col
     <i class="fa-solid fa-xmark"></i>
   </button>
 
-  <!-- Brand profile -->
-  <div class="flex flex-col items-center pt-10 pb-6 px-6 border-b border-[#E4FD97]/10">
-    <div class="relative mb-4">
-      <img src="https://cdnfile.pages.dev/77c5e57cf7.jpg" alt="Sprout"
-        class="w-20 h-20 rounded-full object-cover border-2 border-[#E4FD97] shadow-[0_0_24px_rgba(228,253,151,0.35)]" />
-      <span class="absolute bottom-0 right-0 w-5 h-5 bg-[#E4FD97] rounded-full border-2 border-[#131C14] flex items-center justify-center">
-        <i class="fa-solid fa-seedling text-[8px] text-[#10160F]"></i>
-      </span>
+<!-- Brand profile — premium horizontal lockup, no wrap -->
+  <div class="sprout-brand-row">
+    <div class="sprout-brand-avatar">
+      <img src="https://cdnfile.pages.dev/77c5e57cf7.jpg" alt="Sprout" />
+      <span class="sprout-brand-badge"><i class="fa-solid fa-seedling"></i></span>
     </div>
-    <span class="font-display font-extrabold uppercase tracking-widest text-base lime-text">SPROUT</span>
-    <span class="text-[11px] text-[#8FA386] mt-1">Media + ViewTube</span>
+    <div class="sprout-brand-text">
+      <span class="sprout-brand-title">SPROUT</span>
+      <span class="sprout-brand-sub">Media + ViewTube</span>
+    </div>
+    <!-- API Rotation toggle dot lives here, see SECTION 4 -->
+    <button id="apiConfigDot" aria-label="API Key Manager" title="API Key Manager"></button>
   </div>
 
   <!-- Main Navigation — App Switch -->
@@ -1002,13 +1040,7 @@ body.light-mode .vt-playlist-card{ background:rgba(255,255,255,0.85); border-col
   <!-- ViewTube Header -->
   <header class="vt-header">
     <div class="vt-header-inner">
-      <!-- Hamburger for ViewTube (reuses global sidebar) -->
-      <button id="vtHamBtn" aria-label="Open menu"
-        class="flex flex-col gap-[5px] items-center justify-center w-9 h-9 rounded-xl btn-outline transition-all duration-200 shrink-0">
-        <span class="ham-bar" style="width:18px;"></span>
-        <span class="ham-bar" style="width:18px;"></span>
-        <span class="ham-bar" style="width:18px;"></span>
-      </button>
+   
       <div class="vt-logo" id="vtLogoHome">
         <div class="vt-logo-icon">
           <svg viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#10160F"/></svg>
@@ -1261,7 +1293,7 @@ var historyBtn      = document.getElementById('historyBtn');
 var historyModal    = document.getElementById('historyModal');
 var histModalClose  = document.getElementById('historyModalClose');
 var clearHistBtn    = document.getElementById('clearHistBtn');
-
+if(vtHamBtn) vtHamBtn.addEventListener('click', function(){ sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
 function openSidebar(){
   sidebar.classList.add('open');
   sidebarBackdrop.classList.add('open');
